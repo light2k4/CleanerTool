@@ -1,5 +1,5 @@
 @echo off
-title Azukiov - Cleaner Tool Approfondi
+title Lighscent - Cleaner Tool v3.1
 color 0A
 setlocal enabledelayedexpansion
 
