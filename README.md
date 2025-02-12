@@ -74,7 +74,3 @@ Ce projet est sous licence MIT, ce qui signifie qu'il est disponible gratuitemen
 ---
 
 Profitez de l'efficacité et de la simplicité de CleanerTool pour optimiser votre système de fichiers et libérer de l'espace de stockage. Pour toute question, suggestion ou problème, n'hésitez pas à utiliser la section des issues de ce dépôt.
-
-```vbnet
-Ce README explique désormais les étapes pour utiliser CleanerTool à la fois sous Windows et sous Linux/MacOS. Assurez-vous que votre script d'origine pour Linux/MacOS (CleanerTool.sh) fonctionne correctement sur ces plateformes.
-```
