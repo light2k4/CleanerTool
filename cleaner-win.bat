@@ -1,5 +1,5 @@
 @echo off
-title Lighscent - Cleaner Tool v3.1
+title Lighscent - Cleaner Tool v3.2 - Nettoyage Avancé
 color 0A
 setlocal enabledelayedexpansion
 
@@ -98,7 +98,7 @@ if exist "C:\ProgramData\Microsoft\Windows\WER" (
     )
 )
 
-REM Nettoyage du dossier Delivery Optimization (fichiers de mise à jour en cache)
+REM Nettoyage du dossier Delivery Optimization (mises à jour en cache)
 if exist "%WinDir%\SoftwareDistribution\DeliveryOptimization" (
     echo Nettoyage du dossier Delivery Optimization...
     del /s /f /q "%WinDir%\SoftwareDistribution\DeliveryOptimization\*.*" 2>nul
@@ -117,8 +117,47 @@ if exist "%AppData%\Local\Temp" (
     del /s /f /q "%AppData%\Local\Temp\*.*" 2>nul
 )
 
-REM Optionnel : Lancement de l'outil de nettoyage de disque Windows (cleanup manager)
-REM Pour utiliser cette fonction, configurez préalablement les options via "cleanmgr /sageset:1"
+REM ---- Nettoyage avancé additionnel ----
+
+REM Nettoyage des mini-dumps système
+if exist "C:\Windows\Minidump" (
+    echo Nettoyage du dossier Minidump...
+    del /s /f /q "C:\Windows\Minidump\*.*" 2>nul
+    rd /s /q "C:\Windows\Minidump" 2>nul
+    md "C:\Windows\Minidump" 2>nul
+)
+
+REM Nettoyage du dossier Recent (fichiers récents)
+if exist "%APPDATA%\Microsoft\Windows\Recent" (
+    echo Nettoyage du dossier des fichiers recents...
+    del /s /f /q "%APPDATA%\Microsoft\Windows\Recent\*.*" 2>nul
+)
+
+REM Nettoyage des caches des miniatures et icones
+if exist "%LOCALAPPDATA%\Microsoft\Windows\Explorer" (
+    echo Nettoyage des caches des miniatures et icones...
+    del /s /f /q "%LOCALAPPDATA%\Microsoft\Windows\Explorer\thumbcache_*.db" 2>nul
+    del /s /f /q "%LOCALAPPDATA%\Microsoft\Windows\Explorer\iconcache_*.db" 2>nul
+)
+
+REM Nettoyage des journaux d'evenements (Event Logs)
+echo Nettoyage des journaux d'evenements...
+for /f "tokens=*" %%G in ('wevtutil el') do (
+    echo Nettoyage du journal %%G...
+    wevtutil cl "%%G" 2>nul
+)
+
+REM Nettoyage des dossiers temporaires de Windows Update
+if exist "C:\$WINDOWS.~BT" (
+    echo Nettoyage du dossier Windows Update temporaire ($WINDOWS.~BT)...
+    rd /s /q "C:\$WINDOWS.~BT" 2>nul
+)
+if exist "C:\$WINDOWS.~WS" (
+    echo Nettoyage du dossier Windows Update temporaire ($WINDOWS.~WS)...
+    rd /s /q "C:\$WINDOWS.~WS" 2>nul
+)
+
+REM Optionnel: Lancement de l'outil de nettoyage de disque Windows (Cleanmgr)
 echo Lancement de l'outil de nettoyage de disque Windows...
 cleanmgr /sagerun:1
 
